@@ -1,4 +1,3 @@
-import './App.css'
 import Sound from './synthesis/soundGenerator'
 
 function App() {
