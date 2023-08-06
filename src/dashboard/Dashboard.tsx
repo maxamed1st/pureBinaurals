@@ -1,4 +1,4 @@
-import Create from "./create"
+import Create from "./Create"
 
 export default function Dashboard() {
   return (
