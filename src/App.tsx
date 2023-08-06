@@ -1,13 +1,9 @@
-import Sound from './synthesis/soundGenerator'
+import Dashboard from "./dashboard/Dashboard"
 
 function App() {
-
-
+  
   return (
-    <>
-      hello world! <br />
-      <Sound />
-    </>
+    <Dashboard />
   )
 }
 
