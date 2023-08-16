@@ -1,0 +1,48 @@
+@startuml Pure Binaurals Components
+
+title Pure Binaurals - Component Relationships
+
+left to right direction
+
+set separator none
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Component>
+
+skinparam BackgroundColor black
+skinparam DefaultFontColor gold
+
+Person(User, "User")
+System_Boundary(PureBinaurals, "PureBinaurals") {
+  Container_Boundary(Dashboard, "Dashboard") {
+    Component(Dashboard.Dashboard, "Dashboard")
+    Component(Dashboard.Create, "Create")
+    Component(Dashboard.PlayList, "PlayList")
+    Component(Dashboard.Player, "Player")
+  }
+
+  Container_Boundary(synthesis, "synthesis") {
+    Component(synthesis.binauralBeats, "binauralBeats")
+  }
+}
+
+'Create and save new beat
+skinparam ArrowColor green
+User --> Dashboard.Dashboard: "create a beat"
+Dashboard.Dashboard --> Dashboard.Create: "create a beat"
+Dashboard.Create --> synthesis.binauralBeats: "create a beat"
+synthesis.binauralBeats --> Dashboard.PlayList: "save the new beat"
+'view playlist
+skinparam ArrowColor white
+User <--> Dashboard.Dashboard: "View playlist"
+Dashboard.Dashboard <--> Dashboard.PlayList: "view playlist"
+'Play beat
+skinparam ArrowColor blue
+User <--> Dashboard.Dashboard: "play a beat"
+Dashboard.Dashboard <--> Dashboard.Player: "play a beat"
+'delete a beat
+skinparam ArrowColor red
+User --> Dashboard.Dashboard: "delete a beat"
+Dashboard.Dashboard --> Dashboard.PlayList: "Delete a beat"
+@enduml
