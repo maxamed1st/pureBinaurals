@@ -1,4 +1,4 @@
-@startuml Pure Binaurals Components
+@startuml Pure-Binaurals-Components
 
 title Pure Binaurals - Component Relationships
 
@@ -22,8 +22,8 @@ System_Boundary(PureBinaurals, "PureBinaurals") {
     Component(Dashboard.Player, "Player")
   }
 
-  Container_Boundary(synthesis, "synthesis") {
-    Component(synthesis.binauralBeats, "binauralBeats")
+  Container_Boundary(lib, "lib") {
+    Component(lib.binauralBeats, "binauralBeats")
   }
 }
 
@@ -31,8 +31,7 @@ System_Boundary(PureBinaurals, "PureBinaurals") {
 skinparam ArrowColor green
 User --> Dashboard.Dashboard: "create a beat"
 Dashboard.Dashboard --> Dashboard.Create: "create a beat"
-Dashboard.Create --> synthesis.binauralBeats: "create a beat"
-synthesis.binauralBeats --> Dashboard.PlayList: "save the new beat"
+Dashboard.Create --> Dashboard.PlayList: "add the beat"
 'view playlist
 skinparam ArrowColor white
 User <--> Dashboard.Dashboard: "View playlist"
@@ -41,6 +40,7 @@ Dashboard.Dashboard <--> Dashboard.PlayList: "view playlist"
 skinparam ArrowColor blue
 User <--> Dashboard.Dashboard: "play a beat"
 Dashboard.Dashboard <--> Dashboard.Player: "play a beat"
+Dashboard.Player <--> lib.binauralBeats: "play a beat"
 'delete a beat
 skinparam ArrowColor red
 User --> Dashboard.Dashboard: "delete a beat"
