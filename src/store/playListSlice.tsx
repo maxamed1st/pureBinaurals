@@ -1,4 +1,4 @@
-import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface Beat {
   id: number;
@@ -29,11 +29,4 @@ const playListSlice = createSlice({
 });
 
 export const { addBeat, updateBeat, deleteBeat } = playListSlice.actions;
-
-const store = configureStore({
-  reducer: {
-    playList: playListSlice.reducer,
-  },
-});
-
-export default store;
+export const playListReducer = playListSlice.reducer
