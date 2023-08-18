@@ -1,12 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-interface Beat {
-  id: number;
-  title: string;
-  frequency: number;
-  duration: number;
-}
-
 const playListSlice = createSlice({
   name: 'playList',
   initialState: [] as Beat[],

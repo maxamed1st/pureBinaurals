@@ -1,10 +1,3 @@
-interface BinauralBeats {
-  volume(context: AudioContext, leftOscillators: OscillatorNode, rightOscillator: OscillatorNode) : void;
-  frequency(context: AudioContext, leftOscillators: OscillatorNode, rightOscillator: OscillatorNode, left: number, right: number) : void;
-  play(context: AudioContext, leftOscillators: OscillatorNode, rightOscillator: OscillatorNode, time: number) : void;
-  init(context: AudioContext,left: number, right: number, time: number) : void;
-}
-
 const binauralBeats: BinauralBeats = {
   //set volume
   volume : function(ctx, left, right) {
