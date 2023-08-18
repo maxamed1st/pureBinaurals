@@ -1,24 +1,55 @@
 import { PlusIcon, Cross1Icon } from "@radix-ui/react-icons"
 import * as Modal from '@radix-ui/react-dialog'
 import * as Form from '@radix-ui/react-form'
-import { useState } from "react"
+import { ChangeEventHandler, useState } from "react"
+import { inputProps } from "../vite-env"
 
-function Input({ type, ...attributes }: React.InputHTMLAttributes<HTMLInputElement>) {
-  //Set Invalid color only after user leaves the input invalid
-  const [Blur, setBlur] = useState(false)
-
+//custom input element
+function Input({id, type, value, onChange, min }: inputProps) {
+//Set Invalid color only after user leaves the input invalid
+const [Blur, setBlur] = useState(false)
   return (
     <input
-      type={type}
-      className={`rounded outline-none border-2 
-        ${ Blur ? "valid:border-success invalid:border-error" : "border-base-300"}`}
-      onBlur={() => setBlur(true)}
-      {...attributes}
-    />
+     id={id}
+     type={type}
+     value={value}
+     onChange={onChange}
+     min={min}
+     className={`rounded outline-none border-2 
+       ${ Blur ? "valid:border-success invalid:border-error" : "border-base-300"}`}
+     onBlur={() => setBlur(true)}
+     required
+     />
   )
 }
 
 export default function Create() {
+
+  //control input fields
+  const [title, setTitle] = useState('');
+  const [frequency, setFrequency] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  //handle onChange event
+  const handleChange:ChangeEventHandler = (e: any) => {
+    const id = e.target.id;
+    const value = e.target.value;
+    console.log(e.target.id, e.target.value);
+    switch(id) {
+      case("title"):
+        setTitle(value);
+        break;
+      case("frequency"):
+        setFrequency(value);
+        break;
+      case("duration"):
+        setDuration(value);
+        break
+      default:
+        throw Error("Specified input Id doesn't exist")
+    }
+  }
+
   return (
     <Modal.Root>
       <Modal.Trigger>
@@ -47,7 +78,12 @@ export default function Create() {
                 <Form.Message match="valueMissing" className="text-xs text-error">Fill in the title for this beat</Form.Message>
                 </div>
                 <Form.Control asChild>
-                  <Input type="text" required/>
+                  <Input 
+                    id="title"
+                    type="text"
+                    value={title}
+                    onChange={handleChange}
+                    />
                 </Form.Control>
               </Form.Field>
 
@@ -57,7 +93,13 @@ export default function Create() {
                   <Form.Message match="valueMissing" className="text-xs text-error">Fill in the frequency in hz</Form.Message>
                 </div>
                 <Form.Control asChild>
-                  <Input type="number" min={0} required/>
+                  <Input
+                    id="frequency"
+                    type="number"
+                    value={frequency}
+                    onChange={handleChange}
+                    min={1}
+                    />
                 </Form.Control>
               </Form.Field>
 
@@ -67,7 +109,13 @@ export default function Create() {
                   <Form.Message match="valueMissing" className="text-xs text-error"> Fill in the duration in seconds </Form.Message>
                 </div>
                 <Form.Control asChild>
-                  <Input type="number" min={0} required/>
+                  <Input
+                  id="duration"
+                  type="number"
+                  value={duration}
+                  onChange={handleChange}
+                  min={1}
+                  />
                 </Form.Control>
               </Form.Field>
 
