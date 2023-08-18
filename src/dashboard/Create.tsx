@@ -1,8 +1,10 @@
 import { PlusIcon, Cross1Icon } from "@radix-ui/react-icons"
 import * as Modal from '@radix-ui/react-dialog'
 import * as Form from '@radix-ui/react-form'
-import { ChangeEventHandler, useState } from "react"
-import { inputProps } from "../vite-env"
+import { ChangeEventHandler, MutableRefObject, useRef, useState } from "react"
+import { Beat, inputProps } from "../vite-env"
+import { addBeat } from "../store/playListSlice"
+import { useAppDispatch } from "../store/hooks"
 
 //custom input element
 function Input({id, type, value, onChange, min }: inputProps) {
@@ -24,8 +26,12 @@ const [Blur, setBlur] = useState(false)
 }
 
 export default function Create() {
+  /* create new beat */
 
-  //control input fields
+  //variable declarations
+  const dispatch = useAppDispatch();
+  const closeModalRef: MutableRefObject<null|HTMLButtonElement> = useRef(null);
+  const [id, setId] = useState(1);
   const [title, setTitle] = useState('');
   const [frequency, setFrequency] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -50,6 +56,22 @@ export default function Create() {
     }
   }
 
+  //create new beat
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    //dispatch event to store
+    const payLoad: Beat = {id, title, frequency, duration};
+    dispatch(addBeat(payLoad));
+    //increment id to avoid id collisions
+    setId(prev => prev + 1);
+    //close modal
+    closeModalRef.current?.click();
+    //reset input fields
+    setTitle('');
+    setFrequency(0);
+    setDuration(0);
+  }
+
   return (
     <Modal.Root>
       <Modal.Trigger>
@@ -64,13 +86,13 @@ export default function Create() {
 
           <header className='flex justify-between'>
             <Modal.Title className="font-montserrat font-medium text-lg">Create Binaural Beats</Modal.Title>
-            <Modal.Close className="hover:text-base-content/60">
+            <Modal.Close ref={closeModalRef} className="hover:text-base-content/60">
               <Cross1Icon />
             </Modal.Close>
           </header>
 
           <main>
-            <Form.Root className="flex flex-col gap-4">
+            <Form.Root onSubmit={handleSubmit} className="flex flex-col gap-4">
 
               <Form.Field name="title" className="flex flex-col">
                 <div className="flex items-baseline justify-between">
