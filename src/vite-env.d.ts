@@ -1,14 +1,5 @@
 /// <reference types="vite/client" />
 
-//custom input element props
-interface inputProps extends InputHTMLAttributes<HTMLInputElement> {
-  id: string;
-  type: string;
-  required?: boolean;
-  min?: number;
-  max?: number;
-}
-
 //beats generator object properties
 interface BinauralBeats {
   volume(context: AudioContext, leftOscillators: OscillatorNode, rightOscillator: OscillatorNode) : void;
