@@ -46,6 +46,11 @@ skinparam ArrowColor blue
 User <--> Dashboard.Dashboard: "play a beat"
 Dashboard.Dashboard <--> Dashboard.Player: "play a beat"
 Dashboard.Player <--> lib.binauralBeats: "play a beat"
+'update a beat
+skinparam ArrowColor yellow
+User <--> Dashboard.Dashboard: "update a beat"
+Dashboard.Dashboard <--> Dashboard.PlayList: "update the beat"
+Dashboard.PlayList <--> store.playListSlice: "updating the beat"
 'delete a beat
 skinparam ArrowColor red
 User --> Dashboard.Dashboard: "delete a beat"
