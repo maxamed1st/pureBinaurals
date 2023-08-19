@@ -3,13 +3,7 @@
 import { ChangeEventHandler, HTMLInputTypeAttribute } from "react";
 
 //custom input properties
-interface inputProps {
-  id: string;
-  type: HTMLInputTypeAttribute;
-  value: string | number;
-  onChange: ChangeEventHandler<HTMLInputElement>;
-  min?: number;
-}
+type InputProps = InputHTMLAttributes<HTMLInputElement>;
 
 //beats generator object properties
 interface BinauralBeats {

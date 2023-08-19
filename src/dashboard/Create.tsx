@@ -1,29 +1,26 @@
 import { PlusIcon, Cross1Icon } from "@radix-ui/react-icons"
 import * as Modal from '@radix-ui/react-dialog'
 import * as Form from '@radix-ui/react-form'
-import { ChangeEventHandler, MutableRefObject, useRef, useState } from "react"
-import { Beat, inputProps } from "../vite-env"
+import { ChangeEventHandler,  MutableRefObject, forwardRef, useRef, useState } from "react"
+import { Beat, InputProps } from "../vite-env"
 import { addBeat } from "../store/playListSlice"
 import { useAppDispatch } from "../store/hooks"
 
 //custom input element
-function Input({id, type, value, onChange, min }: inputProps) {
-//Set Invalid color only after user leaves the input invalid
-const [Blur, setBlur] = useState(false)
+const Input = forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
+  //Set Invalid color only after user leaves the input invalid
+  const [Blur, setBlur] = useState(false)
   return (
     <input
-     id={id}
-     type={type}
-     value={value}
-     onChange={onChange}
-     min={min}
+     {...props}
      className={`rounded outline-none border-2 
        ${ Blur ? "valid:border-success invalid:border-error" : "border-base-300"}`}
      onBlur={() => setBlur(true)}
      required
+     ref={forwardedRef}
      />
   )
-}
+});
 
 export default function Create() {
   /* create new beat */
