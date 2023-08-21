@@ -19,7 +19,7 @@ export default function Create() {
   }
   devEnv();
 
-  return <Modal Trigger={PlusIcon} MainContent={ModalForm} />
+  return <Modal title="Create Binaural Beat" Trigger={PlusIcon} MainContent={ModalForm} />
 }
 
 function ModalForm({ closeModalRef }: { closeModalRef: refType }) {
