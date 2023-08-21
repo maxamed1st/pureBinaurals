@@ -4,8 +4,8 @@ import { ChangeEventHandler, useState } from "react"
 import { Beat, refType } from "../vite-env"
 import { addBeat } from "../store/playListSlice"
 import { useAppDispatch } from "../store/hooks"
-import Modal from "../lib/Modal"
-import Input from "../lib/Input"
+import Modal from "../Components/Modal"
+import Input from "../Components/Input"
 
 export default function Create() {
   /* create new beat */
