@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import { ChangeEventHandler, HTMLInputTypeAttribute } from "react";
+import { ChangeEventHandler, HTMLInputTypeAttribute, MutableRefObject } from "react";
 
 //custom input properties
 type InputProps = InputHTMLAttributes<HTMLInputElement>;
@@ -20,3 +20,6 @@ interface Beat {
   frequency: number;
   duration: number;
 }
+
+//react ref type for buttons
+type refType = MutableRefObject<null|HTMLButtonElement>
