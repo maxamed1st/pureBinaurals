@@ -28,10 +28,10 @@ function RenderBeat({beat}: {beat: Beat}) {
   const duration = secondsToHHMMSS(beat.duration);
 
   return (
-    <section key={beat.id} className="flex bg-base-200 m-1 rounded-lg font-montserrat">
-      <div className="flex gap-2 mr-auto p-2 content-baseline">
+    <section key={beat.id} className="flex items-center bg-base-200 m-1 rounded-lg text-sm md:text-base lg:text-lg">
+      <div className="flex items-center mr-auto py-2">
         <button className="btn btn-xs rounded-md">
-          <PlayIcon />
+          <PlayIcon className="max-sm:w-3 max-sm:h-3"/>
         </button>
         {beat.title}
       </div>
