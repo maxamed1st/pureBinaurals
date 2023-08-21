@@ -69,6 +69,15 @@ export default function Create() {
     setDuration(0);
   }
 
+  function devEnv() {
+    //Auto create beats for development
+    const payload_1: Beat = {id: 0, title: "first sound", frequency: 30, duration: 105671};
+    const payload_2: Beat = {id: 1, title: "rain of the fire", frequency: 19, duration: 2250};
+    dispatch(addBeat(payload_1));
+    dispatch(addBeat(payload_2));
+  }
+  devEnv();
+
   return (
     <Modal.Root>
       <Modal.Trigger>
