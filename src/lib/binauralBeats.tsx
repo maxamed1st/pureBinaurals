@@ -1,3 +1,5 @@
+import { BinauralBeats } from "../vite-env";
+
 const binauralBeats: BinauralBeats = {
   //set volume
   volume : function(ctx, left, right) {
