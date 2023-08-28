@@ -8,14 +8,14 @@ const playListSlice = createSlice({
     addBeat: (state, action: PayloadAction<Beat>) => {
       state.push(action.payload);
     },
-    updateBeat: (state, action: PayloadAction<{ id: number; updatedBeat: Partial<Beat> }>) => {
+    updateBeat: (state, action: PayloadAction<{ id: string; updatedBeat: Partial<Beat> }>) => {
       const { id, updatedBeat } = action.payload;
       const existingBeat = state.find(beat => beat.id === id);
       if (existingBeat) {
         Object.assign(existingBeat, updatedBeat);
       }
     },
-    deleteBeat: (state, action: PayloadAction<number>) => {
+    deleteBeat: (state, action: PayloadAction<string>) => {
       const beatId = action.payload;
       return state.filter(beat => beat.id !== beatId);
     },

@@ -15,7 +15,7 @@ interface BinauralBeats {
 
 //individual beat properties
 interface Beat {
-  id: number;
+  id: string;
   title: string;
   frequency: number;
   duration: number;
