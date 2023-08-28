@@ -1,6 +1,14 @@
 import { useAppSelector } from "../store/hooks";
 import { Beat } from "../vite-env";
-import { PlayIcon } from "@radix-ui/react-icons";
+import { PlayIcon, DotsHorizontalIcon, Cross1Icon } from "@radix-ui/react-icons";
+import { 
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem
+} from "@/Components/ui/dropdown-menu";
+import { useAppDispatch } from "../store/hooks"
+import { deleteBeat } from "@/store/playListSlice";
 
 export default function PlayList() {
   const beats = useAppSelector(state => state.playList)
@@ -27,6 +35,14 @@ function RenderBeat({beat}: {beat: Beat}) {
   const frequency = beat.frequency.toString().padStart(2, "0");
   const duration = secondsToHHMMSS(beat.duration);
 
+  //delete a beat
+  const dispatch = useAppDispatch()
+
+  function removeBeat(e: any) {
+    const id: string = e.target.getAttribute('data-beat-id');
+    dispatch(deleteBeat(id))
+  }
+
   return (
     <section key={beat.id} className="flex items-center bg-base-200 m-1 rounded-lg text-sm md:text-base lg:text-lg">
       <div className="flex items-center mr-auto py-2">
@@ -46,6 +62,19 @@ function RenderBeat({beat}: {beat: Beat}) {
 
         <div className="tooltip" data-tip="duration">
           {duration}
+        </div>
+        <div>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <DotsHorizontalIcon />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="bg-base-300 border-neutral">
+              <DropdownMenuItem>
+                <Cross1Icon className="pr-2 text-error"/>
+                <button data-beat-id={beat.id} onClick={removeBeat}> Delete </button>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </section>
