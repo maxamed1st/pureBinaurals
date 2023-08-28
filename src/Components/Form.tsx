@@ -1,19 +1,20 @@
 import * as Form from '@radix-ui/react-form'
 import { ChangeEventHandler, useState } from "react"
 import { useAppDispatch } from "../store/hooks"
-import { addBeat } from '@/store/playListSlice';
+import { addBeat, updateBeat } from '@/store/playListSlice';
 import { Beat } from '@/vite-env';
 import Input from './Input';
 import { v4 as uuid } from 'uuid';
 
-export default function ModalForm({ setShowModal }: any) {
+export default function ModalForm({ setShowModal, editBeat }: any) {
   /* new beat form */
 
   //variable declarations
   const dispatch = useAppDispatch();
-  const [title, setTitle] = useState('');
-  const [frequency, setFrequency] = useState(0);
-  const [duration, setDuration] = useState(0);
+  const id = editBeat?.id || uuid();
+  const [title, setTitle] = useState(editBeat?.title || '');
+  const [frequency, setFrequency] = useState(editBeat?.frequency || 0);
+  const [duration, setDuration] = useState(editBeat?.duration || 0);
 
   //handle onChange event
   const handleChange: ChangeEventHandler = (e: any) => {
@@ -39,9 +40,9 @@ export default function ModalForm({ setShowModal }: any) {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     //dispatch event to store
-    const id = uuid()
     const payLoad: Beat = { id, title, frequency, duration };
-    dispatch(addBeat(payLoad));
+    if (editBeat) dispatch(updateBeat(payLoad))
+    else dispatch(addBeat(payLoad));
     //close modal
     setShowModal(false);
     //reset input fields

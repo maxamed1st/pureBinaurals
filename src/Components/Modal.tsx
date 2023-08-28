@@ -1,7 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { Cross1Icon } from '@radix-ui/react-icons'
 
-export default function Modal({ title, MainContent, showModal, setShowModal }: any) {
+export default function Modal({ title, MainContent, showModal, setShowModal, editBeat }: any) {
   return (
     <Dialog.Root open={showModal}>
       <Dialog.Portal>
@@ -18,7 +18,7 @@ export default function Modal({ title, MainContent, showModal, setShowModal }: a
             </Dialog.Close>
           </header>
 
-          <MainContent setShowModal={setShowModal} />
+          <MainContent setShowModal={ setShowModal } editBeat={ editBeat } />
 
         </Dialog.Content>
       </Dialog.Portal>
