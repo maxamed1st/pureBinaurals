@@ -2,11 +2,11 @@ import * as Form from '@radix-ui/react-form'
 import { ChangeEventHandler, useState } from "react"
 import { useAppDispatch } from "../store/hooks"
 import { addBeat } from '@/store/playListSlice';
-import { refType, Beat } from '@/vite-env';
+import { Beat } from '@/vite-env';
 import Input from './Input';
 import { v4 as uuid } from 'uuid';
 
-export default function ModalForm({ closeModalRef }: { closeModalRef: refType}) {
+export default function ModalForm({ setShowModal }: any) {
   /* new beat form */
 
   //variable declarations
@@ -43,7 +43,7 @@ export default function ModalForm({ closeModalRef }: { closeModalRef: refType}) 
     const payLoad: Beat = { id, title, frequency, duration };
     dispatch(addBeat(payLoad));
     //close modal
-    closeModalRef.current?.click();
+    setShowModal(false);
     //reset input fields
     setTitle('');
     setFrequency(0);

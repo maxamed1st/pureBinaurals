@@ -5,9 +5,12 @@ import { useAppDispatch } from "../store/hooks"
 import Modal from "../Components/Modal"
 import ModalForm from "@/Components/Form"
 import { v4 as uuid } from 'uuid';
+import { useState } from "react"
 
 export default function Create() {
   /* create new beat */
+
+  const [showModal, setShowModal] = useState(false);
 
   //Auto create beats for development
   const dispatch = useAppDispatch();
@@ -20,5 +23,12 @@ export default function Create() {
   }
   devEnv();
 
-  return <Modal title="Create Binaural Beat" Trigger={PlusIcon} MainContent={ModalForm} />
+  return (
+    <>
+      <button onClick={() => setShowModal(true)}> 
+        <PlusIcon />
+      </button>
+      <Modal title="Create Binaural Beat" MainContent={ModalForm} showModal={showModal} setShowModal={setShowModal} />
+    </>
+  )
 }

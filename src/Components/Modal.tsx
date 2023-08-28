@@ -1,18 +1,9 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { Cross1Icon } from '@radix-ui/react-icons'
-import { useRef } from 'react';
-import { refType } from '../vite-env';
 
-export default function Modal({ title, Trigger, MainContent }: any) {
-  //reference the close button
-  //to give MainContent control over it
-  const closeModalRef: refType = useRef(null);
-
+export default function Modal({ title, MainContent, showModal, setShowModal }: any) {
   return (
-    <Dialog.Root>
-      <Dialog.Trigger>
-        <Trigger />
-      </Dialog.Trigger>
+    <Dialog.Root open={showModal}>
       <Dialog.Portal>
 
         <Dialog.Overlay className='fixed inset-0 bg-black/50' />
@@ -22,12 +13,12 @@ export default function Modal({ title, Trigger, MainContent }: any) {
 
           <header className='flex justify-between'>
             <Dialog.Title className="font-montserrat font-medium text-lg"> {title} </Dialog.Title>
-            <Dialog.Close ref={closeModalRef} className="hover:text-base-content/60">
+            <Dialog.Close onClick={() => setShowModal(false)} className="hover:text-base-content/60">
               <Cross1Icon />
             </Dialog.Close>
           </header>
 
-          <MainContent closeModalRef={closeModalRef} />
+          <MainContent setShowModal={setShowModal} />
 
         </Dialog.Content>
       </Dialog.Portal>
