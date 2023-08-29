@@ -13,7 +13,8 @@ export default function ModalForm({ setShowModal, editBeat }: any) {
   const dispatch = useAppDispatch();
   const id = editBeat?.id || uuid();
   const [title, setTitle] = useState(editBeat?.title || '');
-  const [frequency, setFrequency] = useState(editBeat?.frequency || 0);
+  const [baseFrequency, setBaseFrequency] = useState(editBeat?.baseFrequency || 0);
+  const [desiredFrequency, setDesiredFrequency] = useState(editBeat?.desiredFrequency || 0);
   const [duration, setDuration] = useState(editBeat?.duration || 0);
 
   //handle onChange event
@@ -25,12 +26,15 @@ export default function ModalForm({ setShowModal, editBeat }: any) {
       case ("title"):
         setTitle(value);
         break;
-      case ("frequency"):
-        setFrequency(value);
-        break;
       case ("duration"):
         setDuration(value);
         break
+      case ("baseFrequency"):
+        setBaseFrequency(value);
+        break;
+      case ("desiredFrequency"):
+        setDesiredFrequency(value);
+        break;
       default:
         throw Error("Specified input Id doesn't exist")
     }
@@ -40,14 +44,15 @@ export default function ModalForm({ setShowModal, editBeat }: any) {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     //dispatch event to store
-    const payLoad: Beat = { id, title, frequency, duration };
+    const payLoad: Beat = { id, title, baseFrequency, desiredFrequency, duration };
     if (editBeat) dispatch(updateBeat(payLoad))
     else dispatch(addBeat(payLoad));
     //close modal
     setShowModal(false);
     //reset input fields
     setTitle('');
-    setFrequency(0);
+    setBaseFrequency(0);
+    setDesiredFrequency(0);
     setDuration(0);
   }
 
@@ -70,22 +75,6 @@ export default function ModalForm({ setShowModal, editBeat }: any) {
           </Form.Control>
         </Form.Field>
 
-        <Form.Field name="frequency" className="flex flex-col">
-          <div className="flex items-baseline justify-between">
-            <Form.Label className='font-montserrat'>*Frequency</Form.Label>
-            <Form.Message match="valueMissing" className="text-xs text-error">Fill in the frequency in hz</Form.Message>
-          </div>
-          <Form.Control asChild>
-            <Input
-              id="frequency"
-              type="number"
-              value={frequency}
-              onChange={handleChange}
-              min={1}
-            />
-          </Form.Control>
-        </Form.Field>
-
         <Form.Field name="duration" className="flex flex-col">
           <div className="flex items-baseline justify-between">
             <Form.Label className='font-montserrat'>*Duration</Form.Label>
@@ -102,7 +91,39 @@ export default function ModalForm({ setShowModal, editBeat }: any) {
           </Form.Control>
         </Form.Field>
 
-        <Form.Submit className="btn btn-primary max-w-fit self-end"> Create </Form.Submit>
+      <Form.Field name="baseFrequency" className="flex flex-col">
+        <div className="flex items-baseline justify-between">
+          <Form.Label className='font-montserrat'>*Base Frequency</Form.Label>
+          <Form.Message match="valueMissing" className="text-xs text-error">Fill in the frequency in hz</Form.Message>
+        </div>
+        <Form.Control asChild>
+          <Input
+            id="baseFrequency"
+            type="number"
+            value={baseFrequency}
+            onChange={handleChange}
+            min={1}
+          />
+        </Form.Control>
+      </Form.Field>
+
+      <Form.Field name="desiredFrequency" className="flex flex-col">
+        <div className="flex items-baseline justify-between">
+          <Form.Label className='font-montserrat'>*Desired Frequency</Form.Label>
+          <Form.Message match="valueMissing" className="text-xs text-error">Fill in the frequency in hz</Form.Message>
+        </div>
+        <Form.Control asChild>
+          <Input
+            id="desiredFrequency"
+            type="number"
+            value={desiredFrequency}
+            onChange={handleChange}
+            min={1}
+          />
+        </Form.Control>
+      </Form.Field>
+
+        <Form.Submit className="btn btn-primary max-w-fit self-end"> {editBeat ? "Update" : "Create"} </Form.Submit>
 
       </Form.Root>
     </main>

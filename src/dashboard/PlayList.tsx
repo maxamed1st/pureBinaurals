@@ -44,7 +44,7 @@ function RenderBeat({beat, updateBeat, showModal, setShowModal, editBeat}: any) 
   }
 
   //format beat frequency and duration
-  const frequency = beat.frequency.toString().padStart(2, "0");
+  const frequency = beat.desiredFrequency.toString().padStart(2, "0");
   const duration = secondsToHHMMSS(beat.duration);
 
   //delete a beat

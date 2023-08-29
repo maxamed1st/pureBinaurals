@@ -17,7 +17,8 @@ interface BinauralBeats {
 interface Beat {
   id: string;
   title: string;
-  frequency: number;
+  baseFrequency: number;
+  desiredFrequency: number;
   duration: number;
 }
 

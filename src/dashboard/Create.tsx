@@ -16,8 +16,8 @@ export default function Create() {
   const dispatch = useAppDispatch();
   function devEnv() {
     const id = () => uuid();
-    const payload_1: Beat = { id: id(), title: "first sound", frequency: 30, duration: 105671 };
-    const payload_2: Beat = { id: id(), title: "rain of the fire", frequency: 19, duration: 2250 };
+    const payload_1: Beat = { id: id(), title: "first sound", baseFrequency: 200, desiredFrequency: 30, duration: 105671 };
+    const payload_2: Beat = { id: id(), title: "rain of the fire", baseFrequency: 440, desiredFrequency: 5, duration: 2250 };
     dispatch(addBeat(payload_1));
     dispatch(addBeat(payload_2));
   }
