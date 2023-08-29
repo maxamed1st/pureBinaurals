@@ -1,0 +1,49 @@
+@startuml player-implementation
+
+title Player: Implementation
+
+left to right direction
+
+
+set separator none
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Component>
+
+skinparam BackgroundColor black
+skinparam DefaultFontColor gold
+skinparam ArrowColor gold
+
+Person(user, "User")
+
+System_Boundary(pureBinaurals, Pure Binaurals) {
+  Container_Boundary(Dashboard, "Dashboard") {
+    Component(player, "Player")
+    Component(playList, "PlayList")
+  }
+
+  Container_Boundary(store, "Store") {
+    Component(currentSelection, "Current Selection")
+  }
+
+  Container_Boundary(lib, "Library") {
+    Component(binauralBeats, "Binaural Beats")
+  }
+}
+
+'select a beat
+user --> playList: "play a beat"
+playList --> currentSelection: "update current selection"
+
+'play the beat
+player -- currentSelection: "current selection"
+player <--> binauralBeats: "play the beat"
+player --> user: "playing beat"
+'pause the beat
+skinparam ArrowColor #ebe8e2
+skinparam ArrowFontColor #ebe8e2
+user <--> player: "pause the beat"
+player <--> binauralBeats: "pause the context"
+
+@enduml
