@@ -9,8 +9,9 @@ type InputProps = InputHTMLAttributes<HTMLInputElement>;
 interface BinauralBeats {
   volume(context: AudioContext, leftOscillators: OscillatorNode, rightOscillator: OscillatorNode) : void;
   frequency(context: AudioContext, leftOscillators: OscillatorNode, rightOscillator: OscillatorNode, left: number, right: number) : void;
-  play(context: AudioContext, leftOscillators: OscillatorNode, rightOscillator: OscillatorNode, time: number) : void;
-  init(context: AudioContext,left: number, right: number, time: number) : void;
+  start(leftOscillators: OscillatorNode, rightOscillator: OscillatorNode) : void;
+  pause(leftOscillators: OscillatorNode, rightOscillator: OscillatorNode) : void;
+  init(context: AudioContext,left: number, right: number) : void;
 }
 
 //individual beat properties
@@ -24,3 +25,8 @@ interface Beat {
 
 //react ref type for buttons
 type refType = MutableRefObject<null|HTMLButtonElement>
+
+//currently selected beat
+interface currentBeat {
+  value: string
+}
