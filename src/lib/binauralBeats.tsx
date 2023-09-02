@@ -36,8 +36,6 @@ const binauralBeat: BinauralBeat = {
     //stop playing when the beat duration has elapsed
     this.leftOscillator.stop(this.context.currentTime + beat.duration);
     this.rightOscillator.stop(this.context.currentTime + beat.duration);
-
-    this.context.onstatechange = () => console.log(this.context?.state, this.beat);
   },
 
   start() {
