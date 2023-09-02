@@ -10,10 +10,11 @@ import { deleteBeat } from "@/store/playListSlice";
 import Modal from "@/Components/Modal";
 import ModalForm from "@/Components/Form";
 import { useState } from "react";
+import { updateCurrentBeat } from "@/store/currentBeatSlice";
 
 export default function PlayList() {
   const beats = useAppSelector(state => state.playList)
-  
+
   //edit a beat
   const [showModal, setShowModal] = useState(false);
   const [editBeat, setEditBeat] = useState(null);
@@ -55,10 +56,15 @@ function RenderBeat({beat, updateBeat, showModal, setShowModal, editBeat}: any) 
     dispatch(deleteBeat(id))
   }
 
+  //play a beat
+  function updateCurrent() {
+    dispatch(updateCurrentBeat(beat))
+  }
+
   return (
     <section key={beat.id} className="flex items-center bg-base-200 m-1 rounded-lg text-sm md:text-base lg:text-lg">
       <div className="flex items-center mr-auto py-2">
-        <button className="btn btn-xs rounded-md">
+        <button onClick={updateCurrent} className="btn btn-xs rounded-md">
           <PlayIcon className="max-sm:w-3 max-sm:h-3"/>
         </button>
         {beat.title}

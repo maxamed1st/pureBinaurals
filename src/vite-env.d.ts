@@ -27,6 +27,4 @@ interface Beat {
 type refType = MutableRefObject<null|HTMLButtonElement>
 
 //currently selected beat
-interface currentBeat {
-  value: string
-}
+type currentBeat = Beat | null;

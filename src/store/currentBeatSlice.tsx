@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { currentBeat } from '@/vite-env';
+import { Beat, currentBeat } from '@/vite-env';
 
 const currentBeatSlice = createSlice({
   name: "currentBeat",
-  initialState: { value: "" } as currentBeat,
+  initialState: null as currentBeat,
   reducers: {
-    updateCurrentBeat: (state, action: PayloadAction<string>) => {
-      state.value = action.payload;
+    updateCurrentBeat: (_state, action: PayloadAction<Beat>) => {
+      const beat = action.payload;
+      return beat;
     }
   }
 });
