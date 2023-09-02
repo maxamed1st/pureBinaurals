@@ -6,12 +6,18 @@ import { ChangeEventHandler, HTMLInputTypeAttribute, MutableRefObject } from "re
 type InputProps = InputHTMLAttributes<HTMLInputElement>;
 
 //beats generator object properties
-interface BinauralBeats {
-  volume(context: AudioContext, leftOscillators: OscillatorNode, rightOscillator: OscillatorNode) : void;
-  frequency(context: AudioContext, leftOscillators: OscillatorNode, rightOscillator: OscillatorNode, left: number, right: number) : void;
-  start(leftOscillators: OscillatorNode, rightOscillator: OscillatorNode) : void;
-  pause(leftOscillators: OscillatorNode, rightOscillator: OscillatorNode) : void;
-  init(context: AudioContext,left: number, right: number) : void;
+interface BinauralBeat {
+  beat: Beat | null;
+  context: AudioContext | null;
+  leftOscillator: OscillatorNode | null;
+  rightOscillator: OscillatorNode | null;
+  gainNode: GainNode | null;
+
+  init: (beat: Beat) => void;
+  start: () => void;
+  play: () => Promise<void>;
+  pause: () => Promise<void>;
+  close: () => Promise<void>;
 }
 
 //individual beat properties
@@ -24,7 +30,7 @@ interface Beat {
 }
 
 //react ref type for buttons
-type refType = MutableRefObject<null|HTMLButtonElement>
+type refType = MutableRefObject<null | HTMLButtonElement>
 
 //currently selected beat
 type currentBeat = Beat | null;

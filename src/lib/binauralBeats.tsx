@@ -1,47 +1,73 @@
-import { BinauralBeats } from "../vite-env";
+import { Beat, BinauralBeat } from "../vite-env";
 
-const binauralBeats: BinauralBeats = {
-  //set volume
-  volume : function(ctx, left, right) {
-    const gain = ctx.createGain();
-    gain.gain.setValueAtTime(1, ctx.currentTime)
-    gain.connect(ctx.destination)
+const binauralBeat: BinauralBeat = {
+  beat: null,
+  context: null,
+  leftOscillator: null,
+  rightOscillator: null,
+  gainNode: null,
 
-    left.connect(gain);
-    right.connect(gain);
+  init: function (beat: Beat) {
+    //initialize context
+    this.beat = beat;
+    this.context = new AudioContext();
+    const hdf = this.beat.desiredFrequency / 2;
+
+    //initialize nodes
+    this.leftOscillator = new OscillatorNode(this.context, {
+      type: "sine",
+      frequency: this.beat.baseFrequency - hdf,
+    });
+    this.rightOscillator = new OscillatorNode(this.context, {
+      type: "sine",
+      frequency: this.beat.baseFrequency + hdf,
+    });
+    this.gainNode = new GainNode(this.context, { gain: 1 });
+
+    //connect nodes
+    this.leftOscillator.connect(this.gainNode);
+    this.rightOscillator.connect(this.gainNode);
+    this.gainNode.connect(this.context.destination);
+
+    //play the beat
+    this.rightOscillator.start();
+    this.leftOscillator.start();
+
+    //stop playing when the beat duration has elapsed
+    this.leftOscillator.stop(this.context.currentTime + beat.duration);
+    this.rightOscillator.stop(this.context.currentTime + beat.duration);
+
+    this.context.onstatechange = () => console.log(this.context?.state, this.beat);
   },
 
-  //set frequency
-  frequency : function(ctx, leftOscillator, rightOscillator, left, right) {
-    leftOscillator.type = "sine"
-    leftOscillator.frequency.setValueAtTime(left, ctx.currentTime)
-    rightOscillator.type = "sine"
-    rightOscillator.frequency.setValueAtTime(right, ctx.currentTime)
+  start() {
+    this.rightOscillator?.start();
+    this.leftOscillator?.start();
   },
 
-  //play the audio
-  play : function(ctx, leftOscillator, rightOscillator, time) {
-    const duration = ctx.currentTime + time;
-    leftOscillator.start();
-    rightOscillator.start();
-    
-    leftOscillator.stop(duration);
-    rightOscillator.stop(duration);
+  async play() {
+    try {
+      await this.context?.resume();
+    } catch (err) {
+      console.log(err);
+    }
   },
 
-  //initialize
-  init : function(ctx, left, right, time) {
-    //create oscillators
-    const leftOscillator = ctx.createOscillator()
-    const rightOscillator = ctx.createOscillator()
+  async pause() {
+    try {
+      await this.context?.suspend();
+    } catch (err) {
+      console.log(err);
+    }
+  },
 
-    //set frequency
-    this.frequency(ctx, leftOscillator, rightOscillator,left, right);
-    //set volume and connect oscillator
-    this.volume(ctx, leftOscillator, rightOscillator)
-    //play the audio
-    this.play(ctx, leftOscillator, rightOscillator, time);
-  }
-}
+  async close() {
+    try {
+      await this.context?.suspend();
+    } catch (err) {
+      console.log(err);
+    }
+  },
+};
 
-export default binauralBeats;
+export default binauralBeat;
